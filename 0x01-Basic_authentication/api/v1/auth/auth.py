@@ -14,7 +14,27 @@ class Auth:
         """
         Method returns False.
         """
-        return False
+        if path is None:
+            return True
+        if excluded_paths is None or len(excluded_paths) == 0:
+            return True
+        """
+        standardise the path to remove slashes if the path already
+        has slashes
+        """
+        if path[-1] == "/":
+            path = path[:-1]
+        for paths in excluded_paths:
+            if paths[-1] == "/":
+                """
+                standardise the paths in excluded_paths to
+                remove slashes if they already have slashes
+                """
+                paths = paths[:-1]
+                if paths == path:
+                    return False
+                else:
+                    return True
 
     def authorization_header(self, request=None) -> str:
         """
