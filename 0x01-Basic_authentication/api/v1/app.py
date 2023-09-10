@@ -21,6 +21,10 @@ if getenv("AUTH_TYPE"):
 
 @app.before_request
 def filter_request() -> str:
+    """
+    Function filters requests sent to the application to determine which
+    ones require authorization
+    """
     path = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
     if auth is None:
         return
