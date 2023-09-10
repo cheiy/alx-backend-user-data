@@ -18,27 +18,16 @@ class Auth:
             return True
         if excluded_paths is None or len(excluded_paths) == 0:
             return True
-        """
-        standardise the path to remove slashes if the path already
-        has slashes
-        """
-        if path[-1] == "/":
-            path = path[:-1]
+        result = []
         for paths in excluded_paths:
-            if paths[-1] == "/":
-                """
-                standardise the paths in excluded_paths to
-                remove slashes if they already have slashes
-                """
-                paths = paths[:-1]
-                if paths == path:
-                    return False
-                else:
-                    return True
-            elif paths == path:
-                return False
+            if paths[:-1] == path or paths == path or paths == path[:-1]:
+                result.append("False")
             else:
-                return True
+                result.append("True")
+        if "False" in result:
+            return False
+        else:
+            return True
 
     def authorization_header(self, request=None) -> str:
         """
